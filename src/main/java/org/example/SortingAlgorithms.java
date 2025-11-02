@@ -3,8 +3,8 @@ package org.example;
 /**
  * Sorting Algorithms Implementation
  *
- * Name: _____________________
- * Date: _____________________
+ * Name: Allen Liang
+ * Date: October 28th 2025
  *
  * This class implements bubble sort and selection sort algorithms.
  * Complete the implementation and analyze the time complexity.
@@ -17,8 +17,11 @@ public class SortingAlgorithms {
      * is larger than the current element (assuming you are sorting lowest to highest).
      * If the items are in the wrong order then they swap.
      *
-     * Time Complexity: O(___) - explain: _________________________________
-     * Space Complexity: O(___) - explain: ________________________________
+     * Time Complexity: O(n)/O(n^2) - explain: In the best case, where the array is already sorted - only one pass is needed & no swaps occur - O(n)
+     * In the worst case scenarios where the array is in reverse order, the elements in every adjacent pair needs to be swapped - O(n^2)
+     * On average, the time complexity is O(n^2)
+     * Space Complexity: O(1) - explain: only requires a constant amount of extra space to store a temporary variable for swapping,
+     *  all sorting is done in-place within the input array
      *
      * @param arr The array to be sorted
      */
@@ -28,25 +31,22 @@ public class SortingAlgorithms {
         // Hint 2: The outer loop controls the number of passes
         // Hint 3: The inner loop performs comparisons and swaps
         // Hint 4: After each pass, the largest element "bubbles" to its correct position
-
         int n = arr.length;
-
         // Outer loop for passes
         for (int i = 0; i < n - 1; i++) {
-
             // Add a boolean flag to optimize (optional enhancement)
-            // boolean swapped = false;
-
+            boolean swapped=false;
             // Inner loop for comparisons in each pass
             // Note: Why do we use (n - i - 1)? Think about what happens after each pass
-
             // YOUR CODE HERE
-
-
-
-
+            for(int j=0;j<n-i-1;j++){
+                if(arr[j]>arr[j+1]){
+                    swap(arr,j,j+1);
+                    swapped=true;
+                }
+            }
             // Optional optimization: if no swaps occurred, array is sorted
-            // if (!swapped) break;
+            if (!swapped) break;
         }
     }
 
@@ -56,8 +56,10 @@ public class SortingAlgorithms {
      * element (sorting lowest to highest). At the end of the pass, the highest value is
      * moved into the correct space.
      *
-     * Time Complexity: O(___) - explain: _________________________________
-     * Space Complexity: O(___) - explain: ________________________________
+     * Time Complexity: O(n^2) - explain: n-1 comparisons in first pass, n-2 in second, ... - sums up to n(n-1)/2 -> O(n^2)
+     * always same # of comparisons no matter sorted or not -> consistently O(n^2)
+     * Space Complexity: O(1) - explain: only requires a constant amount of extra space to store a temporary variable for swapping,
+     * all sorting is done in-place within the input array
      *
      * @param arr The array to be sorted
      */
@@ -66,21 +68,20 @@ public class SortingAlgorithms {
         // Hint 1: Find the minimum element in the unsorted portion
         // Hint 2: Swap it with the element at the beginning of unsorted portion
         // Hint 3: Move the boundary between sorted and unsorted portions
-
         int n = arr.length;
-
         // One by one move boundary of unsorted subarray
         for (int i = 0; i < n - 1; i++) {
-
             // Find the minimum element in unsorted array
             // YOUR CODE HERE
-
-
-
-
+            int min_index=i;
+            for(int j=i+1;j<n;j++){
+                if(arr[j]<arr[min_index]){
+                    min_index=j;
+                }
+            }
             // Swap the found minimum element with the first element
             // YOUR CODE HERE
-
+            swap(arr,min_index,i);
         }
     }
 
@@ -93,10 +94,10 @@ public class SortingAlgorithms {
     private static void swap(int[] arr, int i, int j) {
         // TODO: Implement swap
         // Remember: You need a temporary variable
-
         // YOUR CODE HERE
-
-
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
     }
 
     /**
@@ -195,13 +196,13 @@ public class SortingAlgorithms {
         System.out.println("\n=== Performance Analysis ===");
         System.out.println("Complete the following analysis:");
         System.out.println("1. Which algorithm performed fewer comparisons on an already sorted array?");
-        System.out.println("   Answer: _____________");
+        System.out.println("   Answer: Bubble Sort");
         System.out.println("2. Which algorithm performed fewer swaps on a reverse sorted array?");
-        System.out.println("   Answer: _____________");
-        System.out.println("3. What is the worst-case time complexity for bubble sort? ______");
-        System.out.println("4. What is the worst-case time complexity for selection sort? ______");
-        System.out.println("5. What is the best-case time complexity for bubble sort? ______");
-        System.out.println("6. What is the best-case time complexity for selection sort? ______");
+        System.out.println("   Answer: Selection Sort");
+        System.out.println("3. What is the worst-case time complexity for bubble sort? O(n^2)");
+        System.out.println("4. What is the worst-case time complexity for selection sort? O(n^2)");
+        System.out.println("5. What is the best-case time complexity for bubble sort? O(n)");
+        System.out.println("6. What is the best-case time complexity for selection sort? O(n^2)");
 
         System.out.println();
 
@@ -211,23 +212,23 @@ public class SortingAlgorithms {
         System.out.println("Array: [5, 2, 8, 1, 9]");
         System.out.println();
         System.out.println("Bubble Sort Trace:");
-        System.out.println("Pass 1: ________________________________");
-        System.out.println("Pass 2: ________________________________");
-        System.out.println("Pass 3: ________________________________");
-        System.out.println("Pass 4: ________________________________");
+        System.out.println("Pass 1: [2,5,8,1,9]");
+        System.out.println("Pass 2: [2,5,1,8,9]");
+        System.out.println("Pass 3: [2,1,5,8,9]");
+        System.out.println("Pass 4: [1,2,5,8,9]");
         System.out.println();
         System.out.println("Selection Sort Trace:");
-        System.out.println("Pass 1: ________________________________");
-        System.out.println("Pass 2: ________________________________");
-        System.out.println("Pass 3: ________________________________");
-        System.out.println("Pass 4: ________________________________");
+        System.out.println("Pass 1: [1,2,8,5,9]");
+        System.out.println("Pass 2: [1,2,5,8,9]");
+        System.out.println("Pass 3: [1,2,5,8,9]");
+        System.out.println("Pass 4: [1,2,5,8,9]");
         System.out.println();
         System.out.println("2. Explain why bubble sort can be optimized but selection sort cannot:");
-        System.out.println("_________________________________________________________");
-        System.out.println("_________________________________________________________");
+        System.out.println("Bubble sort can be optimized by stopping early if no swaps are detected during a pass which indicates that the array is already sorted.");
+        System.out.println("Selection sort always scans through the entire unsorted part to find the minimum even if the array is already sorted.");
         System.out.println("3. Explain how you would implement this optimisation within your bubble sort algorithm:");
-        System.out.println("_________________________________________________________");
-        System.out.println("_________________________________________________________");
+        System.out.println("Use a boolean variable that is set to false at the start of each pass and is et to true if a swap has been made during the pass");
+        System.out.println("If no swaps were made, this indicates that the array is already sorted hence break away from the loop early.");
     }
     
 }
